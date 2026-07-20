@@ -1,0 +1,1 @@
+python -c "from src.camera.capture import CameraStream; cam = CameraStream(source=0); cam.start(); import time; time.sleep(2); ret, frame = cam.read(); print(ret, frame.shape if ret else 'No frame'); cam.stop()"

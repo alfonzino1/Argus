@@ -1,0 +1,40 @@
+# Real-Time Vision System Configuration
+
+source:
+  type: "video"          # "camera" or "video"
+  video_path: "test_video.avi"   # used if type is "video"
+  camera_index: 0        # used if type is "camera"
+  width: 1280
+  height: 720
+  fps: 60
+  backend: "CAP_ANY"     # OpenCV backend (CAP_ANY, CAP_V4L2, etc.)
+  reconnect_attempts: 5
+  reconnect_delay: 2.0
+
+detector:
+  model_path: "yolov8n.pt"
+  confidence_threshold: 0.5
+  iou_threshold: 0.45
+  device: null           # null = auto (CPU/CUDA)
+  img_size: 640
+
+tracker:
+  type: "iou"               # "iou" for simple tracker, later "bytetrack"
+  max_lost_frames: 30
+  iou_threshold: 0.3    # IOU threshold for matching
+
+pipeline:
+  window_name: "Real-Time Vision System"
+  show_fps: true         # overlay FPS on frame
+
+events:
+  log_events: true
+  lines:
+    # Example: horizontal line in middle of frame
+    - name: "middle_line"
+      start: [0, 288]   # left point (adjust to your video height/2)
+      end: [768, 288]  # right point
+  zones: []
+    # Example: rectangular zone top-left corner
+    # - name: "danger_zone"
+    #   points: [[100,100], [400,100], [400,400], [100,400]]

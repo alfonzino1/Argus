@@ -1,0 +1,68 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+*.egg-info/
+dist/
+build/
+*.egg
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# ML models (large binary files – use Git LFS or external storage)
+*.pt
+*.onnx
+*.engine
+*.trt
+*.pth
+*.h5
+*.pb
+
+# Data files (videos, images, annotations)
+data/
+datasets/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.jpg
+*.jpeg
+*.png
+
+# Custom – specific to this project
+test_video.avi
+test_video.mp4
+yolov8n.pt
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Config overrides (keep defaults.yaml in repo, ignore local overrides)
+configs/local.yaml
+configs/production.yaml
