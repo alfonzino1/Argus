@@ -19,7 +19,7 @@ from src.utils.auth import (
     authenticate_user,
     create_access_token,
     decode_access_token,
-    DEFAULT_USERS,
+    _get_default_users,
 )
 
 logger = logging.getLogger(__name__)
@@ -50,7 +50,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> Optional[dict
     if username is None:
         return None
     
-    user = DEFAULT_USERS.get(username)
+    users = _get_default_users()
+    user = users.get(username)
     if user is None or user.get("disabled"):
         return None
     

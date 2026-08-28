@@ -52,20 +52,21 @@ def generate_secret_key() -> str:
     return secrets.token_urlsafe(32)
 
 
-# Default users (should be replaced with database in production)
-# In production, these should be loaded from environment variables or a database
-DEFAULT_USERS = {
-    "admin": {
-        "username": "admin",
-        "hashed_password": get_password_hash("changeme"),  # Change in production!
-        "disabled": False,
+def _get_default_users() -> dict:
+    """Get default users dictionary (lazy initialization to avoid import-time hashing)."""
+    return {
+        "admin": {
+            "username": "admin",
+            "hashed_password": get_password_hash("changeme"),  # Change in production!
+            "disabled": False,
+        }
     }
-}
 
 
 def authenticate_user(username: str, password: str) -> Optional[dict]:
     """Authenticate a user by username and password."""
-    user = DEFAULT_USERS.get(username)
+    users = _get_default_users()
+    user = users.get(username)
     if not user:
         return None
     if not verify_password(password, user["hashed_password"]):

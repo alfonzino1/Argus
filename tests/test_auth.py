@@ -9,7 +9,7 @@ from src.utils.auth import (
     decode_access_token,
     authenticate_user,
     generate_secret_key,
-    DEFAULT_USERS,
+    _get_default_users,
 )
 
 
