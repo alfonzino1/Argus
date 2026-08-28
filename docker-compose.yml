@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  vision-system:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: real-time-vision
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+    volumes:
+      # Mount video input directory (optional)
+      - ./data/videos:/app/data/videos:ro
+      # Mount configs for easy updates
+      - ./configs:/app/configs:ro
+      # Mount logs
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    devices:
+      # Optional: GPU support (NVIDIA)
+      - /dev/video0:/dev/video0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s = socket.socket(); s.settimeout(5); result = s.connect_ex(('localhost', 5050)); s.close(); exit(0 if result == 0 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - vision-network
+
+  # Optional: Reverse proxy with SSL termination
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: vision-nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - vision-system
+  #   networks:
+  #     - vision-network
+
+networks:
+  vision-network:
+    driver: bridge

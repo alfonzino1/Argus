@@ -1,0 +1,120 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+.conda/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Large ML models (use Git LFS instead)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.trt
+*.h5
+*.pb
+*.bin
+*.weight
+*.weights
+
+# Data files
+data/
+datasets/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.gif
+*.tiff
+
+# Docker (these should be in repo for the project)
+# But ignore any local docker overrides
+.docker/
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Config overrides
+configs/local.yaml
+configs/production.yaml
+configs/*.local.yaml
+configs/secrets.yaml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Documentation build
+docs/_build/
+site/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# NVIDIA CUDA cache
+.nvidia_cuda_cache/
