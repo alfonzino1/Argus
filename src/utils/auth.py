@@ -15,21 +15,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against a hashed password."""
-    try:
-        return bcrypt.checkpw(
-            plain_password.encode('utf-8'), 
-            hashed_password.encode('utf-8')
-        )
-    except (ValueError, AttributeError):
-        # Handle bcrypt compatibility issues
-        return False
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 
 def get_password_hash(password: str) -> str:
     """Hash a password using bcrypt."""
-    # Ensure password doesn't exceed bcrypt's 72-byte limit
-    if len(password) > 72:
-        password = password[:72]
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed.decode('utf-8')
@@ -62,16 +52,19 @@ def generate_secret_key() -> str:
     return secrets.token_urlsafe(32)
 
 
-def _get_default_users() -> dict:
-    """Get default users dictionary with pre-hashed passwords."""
-    # Hash password lazily to avoid issues during module import
-    return {
-        "admin": {
-            "username": "admin",
-            "hashed_password": get_password_hash("changeme"),  # Change in production!
-            "disabled": False,
-        }
+# Pre-computed default users (hashed once at module load time)
+_DEFAULT_USERS = {
+    "admin": {
+        "username": "admin",
+        "hashed_password": get_password_hash("changeme"),  # Change in production!
+        "disabled": False,
     }
+}
+
+
+def _get_default_users() -> dict:
+    """Get default users dictionary."""
+    return _DEFAULT_USERS.copy()
 
 
 def authenticate_user(username: str, password: str) -> Optional[dict]:
